@@ -14,7 +14,7 @@
     <groupId>com.invoiceautomation</groupId>
     <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>invoice-automation-backend</name>
+    <name>invoice-automation-system-supply-chain-backend</name>
     <description>Invoice automation system backend</description>
 
     <properties>

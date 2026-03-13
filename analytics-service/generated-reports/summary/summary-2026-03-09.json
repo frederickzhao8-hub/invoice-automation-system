@@ -1,0 +1,82 @@
+{
+  "report_type": "summary",
+  "generated_at": "2026-03-09T12:05:51",
+  "window": {
+    "start": null,
+    "end": null
+  },
+  "metrics": {
+    "total_invoice_amount": 4613034.88,
+    "average_production_duration_days": 26.0,
+    "average_shipping_duration_days": 3.0,
+    "average_customs_duration_days": 6.0,
+    "delayed_order_count": 1,
+    "at_risk_order_count": 1,
+    "on_time_delivery_rate_percent": 100.0
+  },
+  "invoice_count_by_vendor": [
+    {
+      "vendor": "A1",
+      "invoice_count": 7
+    },
+    {
+      "vendor": "T1",
+      "invoice_count": 7
+    },
+    {
+      "vendor": "T2",
+      "invoice_count": 1
+    },
+    {
+      "vendor": "ab",
+      "invoice_count": 1
+    }
+  ],
+  "bottleneck_stage_distribution": [
+    {
+      "stage": "PRODUCTION_COMPLETED",
+      "count": 1,
+      "share_percent": 50.0
+    },
+    {
+      "stage": "SHIPPED",
+      "count": 1,
+      "share_percent": 50.0
+    }
+  ],
+  "pandas_processing_sample": {
+    "description": "Sample Pandas processing that groups invoice totals by vendor and cross-joins them with milestone frequency data for downstream exploration.",
+    "rows": [
+      {
+        "vendor": "T1",
+        "total_amount": 3557395.2,
+        "milestone_type": "PO_RECEIVED",
+        "milestone_count": 4
+      },
+      {
+        "vendor": "T1",
+        "total_amount": 3557395.2,
+        "milestone_type": "PRODUCTION_COMPLETED",
+        "milestone_count": 3
+      },
+      {
+        "vendor": "T1",
+        "total_amount": 3557395.2,
+        "milestone_type": "SHIPPED",
+        "milestone_count": 2
+      },
+      {
+        "vendor": "T1",
+        "total_amount": 3557395.2,
+        "milestone_type": "ARRIVED_PORT",
+        "milestone_count": 1
+      },
+      {
+        "vendor": "T1",
+        "total_amount": 3557395.2,
+        "milestone_type": "CUSTOMS_CLEARED",
+        "milestone_count": 1
+      }
+    ]
+  }
+}

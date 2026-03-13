@@ -1,0 +1,5 @@
+fastapi==0.115.12
+uvicorn==0.34.0
+httpx==0.28.1
+langchain==0.3.23
+langgraph==0.3.30

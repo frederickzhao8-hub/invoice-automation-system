@@ -1,0 +1,82 @@
+.mfe-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.mfe-route-frame {
+  margin-bottom: 1rem;
+}
+
+.mfe-shell-copy {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--muted);
+}
+
+.mfe-shell-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.6fr) minmax(260px, 0.8fr);
+  margin-bottom: 1rem;
+}
+
+.mfe-card-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.mfe-card-grid .panel {
+  margin: 0;
+}
+
+.mfe-meta-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.mfe-meta-list strong,
+.mfe-highlight-list strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.mfe-highlight-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.mfe-route-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.mfe-route-nav .section-link {
+  text-decoration: none;
+}
+
+.mfe-stat-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 1rem;
+}
+
+.mfe-list-reset {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.mfe-list-reset li + li {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1080px) {
+  .mfe-shell-grid,
+  .mfe-card-grid,
+  .mfe-stat-grid {
+    grid-template-columns: 1fr;
+  }
+}

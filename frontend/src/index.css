@@ -39,7 +39,8 @@ body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -597,6 +598,304 @@ th {
   width: 100%;
 }
 
+textarea {
+  width: 100%;
+  min-height: 7rem;
+  padding: 0.85rem 0.95rem;
+  border: 1px solid rgba(24, 49, 43, 0.12);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text);
+  resize: vertical;
+  transition: border-color 140ms ease, transform 140ms ease, box-shadow 140ms ease;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: rgba(15, 152, 127, 0.58);
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 4px rgba(15, 152, 127, 0.12);
+}
+
+.module-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.workspace-header {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.9fr);
+  margin-bottom: 1rem;
+}
+
+.workspace-brand h1,
+.module-hero h2 {
+  margin: 0.2rem 0 0.9rem;
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+.workspace-brand h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.module-hero h2 {
+  font-size: clamp(2rem, 4.6vw, 3.7rem);
+}
+
+.workspace-nav-stack {
+  display: grid;
+  gap: 1rem;
+}
+
+.module-nav,
+.section-nav {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.module-link,
+.section-link,
+.page-link {
+  text-decoration: none;
+}
+
+.module-link,
+.section-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.8rem 1rem;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.62);
+  color: var(--text);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.module-link:hover,
+.section-link:hover {
+  transform: translateY(-1px);
+}
+
+.module-link.active,
+.section-link.active {
+  border-color: rgba(15, 152, 127, 0.44);
+  background: rgba(15, 152, 127, 0.12);
+  color: var(--teal-dark);
+}
+
+.compact-copy {
+  margin-bottom: 0;
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.field-full {
+  grid-column: 1 / -1;
+}
+
+.panel-actions,
+.detail-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dashboard-grid,
+.detail-grid,
+.order-page-grid {
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+}
+
+.supply-stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.stack-list,
+.timeline-stack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.list-card,
+.deadline-card,
+.alert-card,
+.timeline-card {
+  border: 1px solid rgba(24, 49, 43, 0.08);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.list-card,
+.deadline-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.1rem;
+}
+
+.deadline-card {
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(241, 250, 247, 0.88)),
+    radial-gradient(circle at top left, rgba(255, 183, 77, 0.14), transparent 32%);
+}
+
+.deadline-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--muted);
+}
+
+.alert-card,
+.timeline-card {
+  padding: 1rem 1.1rem;
+}
+
+.alert-card.warning {
+  border-color: rgba(255, 183, 77, 0.3);
+  background: rgba(255, 249, 235, 0.86);
+}
+
+.alert-card.critical {
+  border-color: rgba(175, 59, 45, 0.18);
+  background: rgba(255, 239, 236, 0.92);
+}
+
+.list-title-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.list-meta {
+  margin: 0 0 0.35rem;
+  color: var(--muted);
+}
+
+.timeline-card-header,
+.timeline-meta-grid {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.timeline-card-header {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: flex-start;
+}
+
+.timeline-meta-grid,
+.detail-summary-grid,
+.timeline-form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-summary-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.timeline-meta-grid {
+  margin: 0.85rem 0;
+}
+
+.timeline-meta-grid p,
+.alert-card p,
+.deadline-card p,
+.list-card p {
+  margin-top: 0.2rem;
+  margin-bottom: 0;
+}
+
+.timeline-form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.compact-field {
+  min-width: 10rem;
+}
+
+.status-pill.good {
+  background: rgba(15, 152, 127, 0.14);
+  color: #0a6b59;
+}
+
+.status-pill.warning {
+  background: rgba(255, 183, 77, 0.2);
+  color: #8d5c0c;
+}
+
+.status-pill.danger {
+  background: rgba(175, 59, 45, 0.12);
+  color: var(--danger);
+}
+
+.status-pill.neutral {
+  background: rgba(24, 49, 43, 0.1);
+  color: var(--text);
+}
+
+.panel table input {
+  width: 100%;
+  min-width: 5rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba(24, 49, 43, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.ai-insight-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.insight-card {
+  border: 1px solid rgba(24, 49, 43, 0.08);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(244, 251, 248, 0.88)),
+    radial-gradient(circle at top right, rgba(15, 152, 127, 0.08), transparent 30%);
+  padding: 1rem 1.1rem;
+}
+
+.insight-card h4 {
+  margin: 0.4rem 0 0.85rem;
+  font-size: 1.3rem;
+}
+
+.insight-narrative {
+  margin: 0.4rem 0 0.85rem;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.insight-list {
+  margin: 0.7rem 0 0;
+  padding-left: 1.1rem;
+  color: var(--text);
+}
+
+.insight-list li + li {
+  margin-top: 0.55rem;
+}
+
 @keyframes rise-in {
   from {
     opacity: 0;
@@ -611,7 +910,12 @@ th {
 @media (max-width: 1080px) {
   .hero,
   .content-grid,
-  .stats-grid {
+  .stats-grid,
+  .workspace-header,
+  .detail-summary-grid,
+  .timeline-meta-grid,
+  .timeline-form-grid,
+  .ai-insight-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -626,6 +930,24 @@ th {
   }
 
   .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .module-nav,
+  .section-nav,
+  .panel-actions,
+  .detail-actions,
+  .list-card,
+  .deadline-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .deadline-meta {
+    text-align: left;
+  }
+
+  .timeline-card-header {
     grid-template-columns: 1fr;
   }
 

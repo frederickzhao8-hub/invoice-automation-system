@@ -397,13 +397,10 @@ export function InvoiceDashboardPage() {
   }
 
   return (
-    <main className="app-shell">
-      <div className="background-orb background-orb-left" />
-      <div className="background-orb background-orb-right" />
-
+    <section className="module-stack">
       <section className="hero">
         <div>
-          <p className="eyebrow">Invoice Automation System</p>
+          <p className="eyebrow">Invoice Automation System Supply Chain</p>
           <h1>Track uploads, approvals, and payment flow from one dashboard.</h1>
           <p className="hero-copy">
             Upload invoice files, filter by vendor or status, and keep the finance pipeline moving
@@ -459,6 +456,6 @@ export function InvoiceDashboardPage() {
         onExport={handleExport}
         onStatusChange={handleStatusChange}
       />
-    </main>
+    </section>
   );
 }

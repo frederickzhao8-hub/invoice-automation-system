@@ -1,0 +1,37 @@
+{
+  "name": "invoice-automation-system-supply-chain-microfrontends",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "dev:host": "webpack serve --config apps/host-app/webpack.config.js",
+    "dev:invoice": "webpack serve --config apps/invoice-app/webpack.config.js",
+    "dev:supply-chain": "webpack serve --config apps/supply-chain-app/webpack.config.js",
+    "dev:dashboard": "webpack serve --config apps/dashboard-app/webpack.config.js",
+    "dev:all": "concurrently -k -n invoice,supply,dashboard,host -c green,blue,magenta,cyan \"npm run dev:invoice\" \"npm run dev:supply-chain\" \"npm run dev:dashboard\" \"npm run dev:host\"",
+    "verify:host": "node scripts/verify-host.mjs",
+    "build:host": "webpack --config apps/host-app/webpack.config.js",
+    "build:invoice": "webpack --config apps/invoice-app/webpack.config.js",
+    "build:supply-chain": "webpack --config apps/supply-chain-app/webpack.config.js",
+    "build:dashboard": "webpack --config apps/dashboard-app/webpack.config.js",
+    "build:all": "npm run build:invoice && npm run build:supply-chain && npm run build:dashboard && npm run build:host"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "concurrently": "^9.1.2",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.3",
+    "playwright": "^1.58.2",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.6.3",
+    "webpack": "^5.98.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.0"
+  }
+}
