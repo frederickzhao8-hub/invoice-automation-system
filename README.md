@@ -6,12 +6,15 @@ Full-stack operations workspace built with:
 - Spring Boot 3 + Java 17
 - PostgreSQL
 
-The repository now contains five modules:
+> Disclaimer: All data, documents, names, and examples in this repository are synthetic or manually written for learning and demonstration purposes only. They do not contain real private, confidential, or production customer information.
+
+The repository now contains six modules:
 
 - `Invoices`: upload, extract, review, deduplicate, and export invoice records
 - `Supply Chain`: create orders, record milestone timestamps, calculate expected dates, detect SLA breaches, and surface alerts
 - `Analytics Service`: read invoice and supply-chain tables with Pandas and generate operational reports in JSON and CSV
 - `AI Service`: consume analytics-service outputs and generate grounded operational summaries, bottleneck insights, delay explanations, and recommended actions
+- `Delivery Image Service`: OCR delivery photos and extract logistics fields such as location, date, PO, entry note, item name, and quantity
 - `Micro-Frontends Demo`: Webpack Module Federation demo with a host shell plus independent invoice, supply-chain, and operations-dashboard remotes
 
 ## Supply Chain Module
@@ -113,6 +116,13 @@ The AI module is intentionally narrow. It is not a chat endpoint and does not ca
 | `POST` | `/ai/daily-summary` | Generate a grounded daily operations summary |
 | `POST` | `/ai/weekly-summary` | Generate a grounded weekly operations summary |
 | `POST` | `/ai/recommendations` | Generate recommended actions from daily, weekly, or summary analytics |
+
+### Delivery Image Service API
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `GET` | `/health` | Health check for the delivery-image OCR service |
+| `POST` | `/delivery-images/extract` | Upload a `jpg` / `jpeg` / `png` delivery image and extract logistics fields plus `raw_text` |
 
 ## Micro-Frontend Demo
 

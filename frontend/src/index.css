@@ -50,7 +50,7 @@ textarea {
 
 .app-shell {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   max-width: 1280px;
   margin: 0 auto;
   padding: 3rem 1.5rem 4rem;
@@ -157,6 +157,15 @@ textarea {
   color: var(--danger);
 }
 
+.success-banner {
+  margin-bottom: 1.5rem;
+  padding: 0.9rem 1rem;
+  border-radius: 18px;
+  border: 1px solid rgba(15, 152, 127, 0.18);
+  background: rgba(235, 249, 244, 0.95);
+  color: var(--teal-dark);
+}
+
 .stats-grid {
   display: grid;
   gap: 1rem;
@@ -248,7 +257,12 @@ textarea {
   justify-content: space-between;
   align-items: flex-start;
   gap: 1rem;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
+}
+
+.panel-heading > * {
+  min-width: 0;
 }
 
 .panel-heading h3 {
@@ -428,13 +442,26 @@ textarea {
   gap: 1rem;
 }
 
+.delivery-batch-progress {
+  margin-top: 0.85rem;
+}
+
 .table-wrapper {
   overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 0.35rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-gutter: stable both-edges;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.table-wrapper table {
+  width: max-content;
+  min-width: 100%;
 }
 
 th,
@@ -713,8 +740,76 @@ textarea:focus {
 
 .dashboard-grid,
 .detail-grid,
-.order-page-grid {
+.order-page-grid,
+.delivery-page-grid {
   grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+}
+
+.delivery-upload-card,
+.image-preview-card {
+  min-height: 100%;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 26rem;
+  object-fit: contain;
+  border-radius: 22px;
+  border: 1px solid rgba(24, 49, 43, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.image-empty-state {
+  display: grid;
+  place-items: center;
+  min-height: 18rem;
+  border: 1px dashed rgba(24, 49, 43, 0.12);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.delivery-result-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.result-card {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba(24, 49, 43, 0.08);
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(244, 251, 248, 0.88)),
+    radial-gradient(circle at top right, rgba(15, 152, 127, 0.08), transparent 30%);
+}
+
+.result-card strong {
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.ocr-raw-text {
+  max-height: 24rem;
+  overflow: auto;
+  margin: 0;
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(24, 49, 43, 0.06);
+  white-space: pre-wrap;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.delivery-records-table td:last-child {
+  min-width: 18rem;
+  white-space: normal;
+}
+
+.delivery-records-table {
+  min-width: 1120px;
 }
 
 .supply-stats-grid {
@@ -915,7 +1010,8 @@ textarea:focus {
   .detail-summary-grid,
   .timeline-meta-grid,
   .timeline-form-grid,
-  .ai-insight-grid {
+  .ai-insight-grid,
+  .delivery-result-grid {
     grid-template-columns: 1fr;
   }
 }

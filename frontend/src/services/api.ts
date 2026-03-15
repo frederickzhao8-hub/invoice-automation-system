@@ -22,6 +22,11 @@ import type {
 } from '../types/supplyChain';
 import type { AnalyticsReport } from '../types/analytics';
 import type { AiInsight, AiOrderAnalysis } from '../types/ai';
+import type {
+  DeliveryImageExtractionResult,
+  DeliveryRecord,
+  DeliveryRecordCreatePayload,
+} from '../types/delivery';
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:8080/api').replace(
   /\/$/,
@@ -33,6 +38,9 @@ const AI_API_BASE_URL = (import.meta.env.VITE_AI_API_BASE_URL ?? 'http://127.0.0
 );
 const ANALYTICS_API_BASE_URL = (
   import.meta.env.VITE_ANALYTICS_API_BASE_URL ?? 'http://127.0.0.1:5001'
+).replace(/\/$/, '');
+const DELIVERY_IMAGE_API_BASE_URL = (
+  import.meta.env.VITE_DELIVERY_IMAGE_API_BASE_URL ?? 'http://127.0.0.1:8010'
 ).replace(/\/$/, '');
 
 interface ApiError {
@@ -170,6 +178,37 @@ async function requestAnalytics<T>(path: string, init?: RequestInit): Promise<T>
   return (await response.json()) as T;
 }
 
+async function requestDeliveryImage<T>(path: string, init?: RequestInit): Promise<T> {
+  let response: Response;
+
+  try {
+    response = await fetch(`${DELIVERY_IMAGE_API_BASE_URL}${path}`, init);
+  } catch {
+    throw new Error(
+      `Cannot connect to the delivery image OCR service at ${DELIVERY_IMAGE_API_BASE_URL}. Make sure delivery-image-service is running.`,
+    );
+  }
+
+  if (!response.ok) {
+    let message = 'Something went wrong while calling the delivery image OCR service.';
+
+    try {
+      const data = (await response.json()) as ApiError & { detail?: string };
+      if (data.detail) {
+        message = data.detail;
+      } else if (data.message) {
+        message = data.message;
+      }
+    } catch {
+      message = response.statusText || message;
+    }
+
+    throw new Error(message);
+  }
+
+  return (await response.json()) as T;
+}
+
 function mapAnalyticsReport(report: RawAnalyticsReport): AnalyticsReport {
   return {
     reportType: report.report_type,
@@ -200,7 +239,7 @@ function mapAnalyticsReport(report: RawAnalyticsReport): AnalyticsReport {
   };
 }
 
-async function requestBlob(path: string): Promise<DownloadResponse> {
+async function requestBlob(path: string, fallbackFileName: string): Promise<DownloadResponse> {
   let response: Response;
 
   try {
@@ -231,7 +270,7 @@ async function requestBlob(path: string): Promise<DownloadResponse> {
 
   return {
     blob: await response.blob(),
-    fileName: fileNameMatch?.[1] ?? 'invoices-export.xlsx',
+    fileName: fileNameMatch?.[1] ?? fallbackFileName,
   };
 }
 
@@ -312,7 +351,10 @@ export function exportInvoices(filters: InvoiceFilters) {
     params.set('status', filters.status);
   }
 
-  return requestBlob(`/invoices/export${params.toString() ? `?${params.toString()}` : ''}`);
+  return requestBlob(
+    `/invoices/export${params.toString() ? `?${params.toString()}` : ''}`,
+    'invoices-export.xlsx',
+  );
 }
 
 export function updateInvoiceStatus(id: number, status: InvoiceStatus) {
@@ -323,6 +365,34 @@ export function updateInvoiceStatus(id: number, status: InvoiceStatus) {
     },
     body: JSON.stringify({ status }),
   });
+}
+
+export function extractDeliveryImage(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return requestDeliveryImage<DeliveryImageExtractionResult>('/delivery-images/extract', {
+    method: 'POST',
+    body: formData,
+  });
+}
+
+export function getDeliveryRecords() {
+  return request<DeliveryRecord[]>('/delivery-records');
+}
+
+export function saveDeliveryRecord(payload: DeliveryRecordCreatePayload) {
+  return request<DeliveryRecord>('/delivery-records', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+export function exportDeliveryRecords() {
+  return requestBlob('/delivery-records/export', 'delivery-records-export.xlsx');
 }
 
 export function getSupplyChainDashboard() {

@@ -21,8 +21,8 @@ export function AppLayout() {
           <p className="eyebrow">Operations Workspace</p>
           <h1>Invoice automation and supply-chain execution in one control plane.</h1>
           <p className="hero-copy">
-            Use the invoice module for finance operations and the new supply-chain module for order
-            milestones, SLA monitoring, and operational alerts.
+            Use invoices for finance operations, supply chain for execution monitoring, and the
+            delivery OCR module for logistics image recognition.
           </p>
         </div>
 
@@ -39,6 +39,12 @@ export function AppLayout() {
               className={({ isActive }) => `module-link${isActive ? ' active' : ''}`}
             >
               Invoices
+            </NavLink>
+            <NavLink
+              to="/delivery-images"
+              className={({ isActive }) => `module-link${isActive ? ' active' : ''}`}
+            >
+              Delivery OCR
             </NavLink>
           </nav>
 

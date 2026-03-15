@@ -75,3 +75,23 @@ create index if not exists idx_invoices_vendor_invoice_number
 
 create index if not exists idx_invoices_vendor_amount_invoice_date
     on invoices (vendor, amount, invoice_date);
+
+create table if not exists delivery_records (
+    id bigserial primary key,
+    item_name varchar(255),
+    quantity numeric(12,2),
+    delivery_date varchar(32),
+    location varchar(255),
+    po_number varchar(128),
+    entry_note varchar(128),
+    raw_text text,
+    original_file_name varchar(255) not null,
+    created_at timestamp without time zone not null,
+    updated_at timestamp without time zone not null
+);
+
+create index if not exists idx_delivery_records_created_at
+    on delivery_records (created_at desc);
+
+create index if not exists idx_delivery_records_po_number
+    on delivery_records (po_number);
