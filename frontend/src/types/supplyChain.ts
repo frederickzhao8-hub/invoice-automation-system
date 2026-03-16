@@ -144,3 +144,35 @@ export interface SupplyChainOrderFilters {
   search: string;
   healthStatus: '' | OrderHealthStatus;
 }
+
+export interface SupplyChainMilestoneImportItemResult {
+  rowNumber: number;
+  orderNumber: string | null;
+  status: 'SUCCESS' | 'SKIPPED' | 'FAILED';
+  updatedMilestones: string[];
+  historyEntriesCreated: number;
+  message: string;
+}
+
+export interface SupplyChainMilestoneImportResult {
+  totalRows: number;
+  successCount: number;
+  skippedCount: number;
+  failureCount: number;
+  historyEntriesCreated: number;
+  results: SupplyChainMilestoneImportItemResult[];
+}
+
+export interface MilestoneImportHistoryEntry {
+  id: number;
+  orderId: number;
+  orderNumber: string;
+  milestoneType: MilestoneType;
+  milestoneLabel: string;
+  previousOccurredAt: string | null;
+  newOccurredAt: string;
+  previousNotes: string | null;
+  newNotes: string | null;
+  sourceFileName: string;
+  importedAt: string;
+}

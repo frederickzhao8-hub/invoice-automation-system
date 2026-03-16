@@ -95,3 +95,21 @@ create index if not exists idx_delivery_records_created_at
 
 create index if not exists idx_delivery_records_po_number
     on delivery_records (po_number);
+
+create table if not exists order_milestone_import_history (
+    id bigserial primary key,
+    order_id bigint not null references orders (id) on delete cascade,
+    milestone_type varchar(64) not null,
+    previous_occurred_at timestamp without time zone,
+    new_occurred_at timestamp without time zone not null,
+    previous_notes varchar(1024),
+    new_notes varchar(1024),
+    source_file_name varchar(255) not null,
+    imported_at timestamp without time zone not null
+);
+
+create index if not exists idx_order_milestone_import_history_imported_at
+    on order_milestone_import_history (imported_at desc);
+
+create index if not exists idx_order_milestone_import_history_order_id
+    on order_milestone_import_history (order_id);

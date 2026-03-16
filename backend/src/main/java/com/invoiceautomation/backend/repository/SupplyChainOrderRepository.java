@@ -18,5 +18,6 @@ public interface SupplyChainOrderRepository extends JpaRepository<SupplyChainOrd
 
     boolean existsByOrderNumberIgnoreCaseAndIdNot(String orderNumber, Long id);
 
+    @EntityGraph(attributePaths = "milestones")
     Optional<SupplyChainOrder> findByOrderNumberIgnoreCase(String orderNumber);
 }

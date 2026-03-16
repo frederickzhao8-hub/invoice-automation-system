@@ -1,11 +1,14 @@
 package com.invoiceautomation.backend.controller;
 
 import com.invoiceautomation.backend.dto.MilestoneRecordRequest;
+import com.invoiceautomation.backend.dto.MilestoneImportHistoryResponse;
+import com.invoiceautomation.backend.dto.SupplyChainMilestoneImportResult;
 import com.invoiceautomation.backend.dto.SupplyChainOrderDetailResponse;
 import com.invoiceautomation.backend.dto.SupplyChainOrderRequest;
 import com.invoiceautomation.backend.dto.SupplyChainOrderSummaryResponse;
 import com.invoiceautomation.backend.entity.MilestoneType;
 import com.invoiceautomation.backend.entity.OrderHealthStatus;
+import com.invoiceautomation.backend.service.SupplyChainMilestoneImportService;
 import com.invoiceautomation.backend.service.SupplyChainService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -20,15 +23,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/supply-chain/orders")
 public class SupplyChainOrderController {
 
     private final SupplyChainService supplyChainService;
+    private final SupplyChainMilestoneImportService milestoneImportService;
 
-    public SupplyChainOrderController(SupplyChainService supplyChainService) {
+    public SupplyChainOrderController(
+            SupplyChainService supplyChainService,
+            SupplyChainMilestoneImportService milestoneImportService) {
         this.supplyChainService = supplyChainService;
+        this.milestoneImportService = milestoneImportService;
     }
 
     @GetMapping
@@ -47,6 +55,18 @@ public class SupplyChainOrderController {
     public ResponseEntity<SupplyChainOrderDetailResponse> createOrder(
             @Valid @RequestBody SupplyChainOrderRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(supplyChainService.createOrder(request));
+    }
+
+    @PostMapping(value = "/import-milestones", consumes = {"multipart/form-data"})
+    public ResponseEntity<SupplyChainMilestoneImportResult> importMilestones(
+            @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(milestoneImportService.importWorkbook(file));
+    }
+
+    @GetMapping("/milestone-import-history")
+    public List<MilestoneImportHistoryResponse> getMilestoneImportHistory(
+            @RequestParam(defaultValue = "12") int limit) {
+        return milestoneImportService.getRecentHistory(limit);
     }
 
     @PutMapping("/{id}")

@@ -14,7 +14,6 @@ import type {
   SupplyChainOrderDetail,
 } from '../types/supplyChain';
 import {
-  formatCurrency,
   formatDateTime,
   formatNumber,
   formatStageLabel,
@@ -243,9 +242,7 @@ export function SupplyChainOrderDetailPage() {
           <div>
             <p className="eyebrow">Order Detail</p>
             <h2>{order.orderNumber}</h2>
-            <p className="hero-copy compact-copy">
-              {order.customerName} · {order.productName} · {formatCurrency(order.orderValue)}
-            </p>
+            <p className="hero-copy compact-copy">{order.customerName} · {order.productName}</p>
           </div>
 
           <div className="detail-actions">

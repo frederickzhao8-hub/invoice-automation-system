@@ -35,7 +35,6 @@ const fields: Array<{
   { field: 'originCountry', label: 'Origin country' },
   { field: 'destinationCountry', label: 'Destination country' },
   { field: 'quantity', label: 'Quantity', type: 'number', step: '0.01' },
-  { field: 'orderValue', label: 'Order value (USD)', type: 'number', step: '0.01' },
   { field: 'poReceivedAt', label: 'PO received at', type: 'datetime-local' },
 ];
 

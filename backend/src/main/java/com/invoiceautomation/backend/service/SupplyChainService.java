@@ -21,6 +21,7 @@ import com.invoiceautomation.backend.repository.SlaRuleRepository;
 import com.invoiceautomation.backend.repository.SupplyChainAlertRepository;
 import com.invoiceautomation.backend.repository.SupplyChainOrderRepository;
 import jakarta.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.Clock;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -414,7 +415,7 @@ public class SupplyChainService {
         order.setOriginCountry(normalizeRequired(request.originCountry(), "Origin country"));
         order.setDestinationCountry(normalizeRequired(request.destinationCountry(), "Destination country"));
         order.setQuantity(request.quantity());
-        order.setOrderValue(request.orderValue());
+        order.setOrderValue(request.orderValue() == null ? BigDecimal.ZERO : request.orderValue());
         order.setNotes(normalizeNullable(request.notes()));
     }
 

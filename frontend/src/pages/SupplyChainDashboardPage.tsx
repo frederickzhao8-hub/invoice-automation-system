@@ -13,7 +13,7 @@ import type {
   SupplyChainDashboard,
   SupplyChainOrderSummary,
 } from '../types/supplyChain';
-import { formatCurrency, formatDateTimeCompact, formatStageLabel } from '../utils/formatters';
+import { formatDateTimeCompact, formatStageLabel } from '../utils/formatters';
 
 export function SupplyChainDashboardPage() {
   const [dashboard, setDashboard] = useState<SupplyChainDashboard | null>(null);
@@ -213,7 +213,6 @@ export function SupplyChainDashboardPage() {
                   </div>
                   <div className="deadline-meta">
                     <span>{formatDateTimeCompact(order.nextExpectedAt)}</span>
-                    <span>{formatCurrency(order.orderValue)}</span>
                   </div>
                 </article>
               ))

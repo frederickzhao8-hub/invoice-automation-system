@@ -1,0 +1,3 @@
+PO Number,Customer,Supplier,Product,Origin Country,Destination Country,Quantity,Notes,PO Received,Production Completed,Shipped,Arrived Port,Customs Cleared,Delivered
+SC-2001,A1,FiberHome Wuhan,24-Core Fiber Cable,China,Mexico,18000,Auto-create order from Excel,2026-03-01 09:00,2026-03-20 10:00,2026-03-22 08:30,,,
+SC-2002,T1,FiberHome Wuhan,Outdoor Distribution Boxes,China,Mexico,300,Auto-create order from Excel,2026-03-02 09:00,2026-03-18 14:00,,,,

@@ -9,6 +9,8 @@ import type {
 } from '../types/invoice';
 import type {
   AlertStatus,
+  MilestoneImportHistoryEntry,
+  SupplyChainMilestoneImportResult,
   MilestoneRecordPayload,
   MilestoneType,
   SlaRule,
@@ -451,6 +453,22 @@ export function recordSupplyChainMilestone(
     },
     body: JSON.stringify(payload),
   });
+}
+
+export function importSupplyChainMilestones(file: File) {
+  const formData = new FormData();
+  formData.append('file', file);
+
+  return request<SupplyChainMilestoneImportResult>('/supply-chain/orders/import-milestones', {
+    method: 'POST',
+    body: formData,
+  });
+}
+
+export function getSupplyChainMilestoneImportHistory(limit = 12) {
+  return request<MilestoneImportHistoryEntry[]>(
+    `/supply-chain/orders/milestone-import-history?limit=${limit}`,
+  );
 }
 
 export function deleteSupplyChainOrder(orderId: number) {

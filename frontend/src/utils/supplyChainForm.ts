@@ -18,7 +18,7 @@ export function createEmptyOrderFormValues(): SupplyChainOrderFormValues {
     originCountry: '',
     destinationCountry: '',
     quantity: '',
-    orderValue: '',
+    orderValue: '0',
     notes: '',
     poReceivedAt: localNow,
   };
@@ -50,7 +50,7 @@ export function toOrderPayload(values: SupplyChainOrderFormValues): SupplyChainO
     originCountry: values.originCountry.trim(),
     destinationCountry: values.destinationCountry.trim(),
     quantity: Number(values.quantity),
-    orderValue: Number(values.orderValue),
+    orderValue: Number(values.orderValue || '0'),
     notes: values.notes.trim() ? values.notes.trim() : null,
     poReceivedAt: values.poReceivedAt,
   };
