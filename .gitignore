@@ -10,9 +10,11 @@ backend/target/
 dist/
 frontend/dist/
 
-# Python
+# Python virtual env
 .venv/
 venv/
+ai-service/.venv/
+analytics-service/.venv/
 
 # Uploads
 backend/uploads/
