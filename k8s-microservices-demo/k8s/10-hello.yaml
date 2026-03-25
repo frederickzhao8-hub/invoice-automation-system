@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-service
+  namespace: demo-microservices
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: hello-service
+  template:
+    metadata:
+      labels:
+        app: hello-service
+    spec:
+      containers:
+        - name: hello-service
+          # Replace this image name with your own registry path if needed.
+          image: demo/hello-service:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+          env:
+            - name: SERVICE_NAME
+              value: hello-service
+            - name: APP_VERSION
+              value: v1
+            - name: STARTUP_DELAY_SECONDS
+              valueFrom:
+                configMapKeyRef:
+                  name: demo-shared-config
+                  key: HELLO_STARTUP_DELAY_SECONDS
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /health/ready
+              port: 5000
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /health/live
+              port: 5000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-service
+  namespace: demo-microservices
+spec:
+  selector:
+    app: hello-service
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5000
+  type: ClusterIP
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: hello-service-hpa
+  namespace: demo-microservices
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: hello-service
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70

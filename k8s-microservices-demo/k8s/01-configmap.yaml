@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo-shared-config
+  namespace: demo-microservices
+data:
+  # Internal service discovery for the gateway service.
+  HELLO_SERVICE_URL: http://hello-service.demo-microservices.svc.cluster.local:80
+  ORDER_SERVICE_URL: http://order-service.demo-microservices.svc.cluster.local:80
+  REQUEST_TIMEOUT_SECONDS: "2.0"
+
+  # Startup delays make readiness behavior easier to demonstrate in interviews.
+  HELLO_STARTUP_DELAY_SECONDS: "5"
+  ORDER_STARTUP_DELAY_SECONDS: "5"
+  GATEWAY_STARTUP_DELAY_SECONDS: "3"
