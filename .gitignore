@@ -1,11 +1,22 @@
 # Python
 __pycache__/
 *.pyc
+.venv/
+
+# Java
+target/
+
+# Node
+node_modules/
+dist/
 
 # Database
 *.db
 *.mv.db
 *.lock.db
+
+# Uploads
+uploads/
 
 # OS
 .DS_Store
