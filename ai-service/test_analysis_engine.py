@@ -100,6 +100,11 @@ class InsightAnalysisEngineTest(unittest.TestCase):
         self.assertEqual(response.analysis_type, "daily-summary")
         self.assertEqual(response.most_common_bottleneck_stage, "SHIPPED")
         self.assertTrue(response.recommended_actions)
+        self.assertIn("etl", response.grounding)
+        self.assertIn("anomalies", response.grounding)
+        self.assertTrue(
+            any(item["type"] == "cost_spike" for item in response.grounding["anomalies"])
+        )
 
     def test_order_analysis_uses_order_delay_stage(self) -> None:
         response = self.engine.analyze_order(2)
@@ -109,6 +114,8 @@ class InsightAnalysisEngineTest(unittest.TestCase):
             any("breached" in cause.lower() or "late" in cause.lower() for cause in response.root_causes)
         )
         self.assertTrue(any("3 day(s)" in cause for cause in response.root_causes))
+        self.assertIn("etl", response.grounding)
+        self.assertIn("anomalies", response.grounding)
 
     def test_recommendations_response_uses_recommendations_analysis_type(self) -> None:
         response = self.engine.recommendations("weekly")
